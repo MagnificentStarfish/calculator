@@ -19,31 +19,52 @@
 function calculate(userInput: string): number | undefined | string {
     let userCalculatorInput = userInput.slice(0, userInput.indexOf("="));
     let newString = userCalculatorInput.toString();
-    let splitString = newString.split(/(\+|\-|\*|\/)/g);
-    let result = 0;
+    let splitString = newString.split(/(?<=\d)(?=[+\-*/])|(?<=[+\-*/])\-?(?=\d)/g);
+    console.log(splitString);
+    let tempString = '';
+
     for (let i=0; i<splitString.length; i++) {
+        if (splitString[i] !== '*' && splitString[i] !== '/') {
+            tempString += splitString[i];
+        }
+
         if (splitString[i] === '*') {
-            result = parseInt(splitString[i-1]) * parseInt(splitString[i+1]);
+            let operationResult = parseInt(splitString[i-1]) * parseInt(splitString[i+1]);
+            // tempString.slice(i-1, 3, operationResult.toString());
+            tempString += operationResult.toString();
+            i -= 2;
         }
         if (splitString[i] === '/') {
-            result = parseInt(splitString[i-1]) / parseInt(splitString[i+1]);
+            let operationResult = parseInt(splitString[i-1]) / parseInt(splitString[i+1]);
+            // tempString.slice(i-1, 3, operationResult.toString());
+            tempString += operationResult.toString();
+            i -= 2;
         }
     }
-    for (let i=0; i<splitString.length; i++) {
+    console.log('tempString :', tempString);
+    let result = 0;
+    console.log(splitString);
+    for (let i=0; i<tempString.length; i++) {
         if (splitString[i] === '+') {
-            result += parseInt(splitString[i+1]);
+            result += parseInt(tempString[i+1]);
         }
         if (splitString[i] === '-') {
-            result -= parseInt(splitString[i+1]);
+            result -= parseInt(tempString[i+1]);
         }
     }
     console.log(result);
     return result;
 }
 
-let userInput = "3+6*2=";
+let userInput = "0+4=";
 let result = calculate(userInput);
-console.log(result); // Output: 15
+console.log(result); // Output: -4
+
+let userInput2 = "2*3=";
+let result2 = calculate(userInput2);
+console.log(result2); // Output: 6
+
+
 
 // function calculate(userInput: string): number | undefined | string {
 //     let convertedString = userInput.toString();
