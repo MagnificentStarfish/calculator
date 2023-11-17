@@ -86,7 +86,6 @@ function calculate(userInput: string): number | undefined  {
       }
 
 
-
 let userInput = "2+40+3=";
 let result = calculate(userInput);
 console.log(result);
