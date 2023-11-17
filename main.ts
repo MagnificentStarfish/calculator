@@ -16,7 +16,7 @@
 //             console.log(newNumbers);
 
 
-function calculate(userInput: string): number | undefined | string {
+function calculate(userInput: string): number{
     let userCalculatorInput = userInput.slice(0, userInput.indexOf("="));
     let newString = userCalculatorInput.toString();
     let splitString = newString.split(/(?<=\d)(?=[+\-*/])|(?<=[+\-*/])\-?(?=\d)/g);
@@ -24,11 +24,14 @@ function calculate(userInput: string): number | undefined | string {
     let tempString = '';
 
     for (let i=0; i<splitString.length; i++) {
+        1*2+3/4=
+        tempString = 1
         if (splitString[i] !== '*' && splitString[i] !== '/') {
             tempString += splitString[i];
         }
 
         if (splitString[i] === '*') {
+            tempString
             let operationResult = parseInt(splitString[i-1]) * parseInt(splitString[i+1]);
             // tempString.slice(i-1, 3, operationResult.toString());
             tempString += operationResult.toString();
