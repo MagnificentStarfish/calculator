@@ -81,6 +81,7 @@ function calculate(userInput: string): number | undefined  {
         console.log(tempString[2])
         console.log(tempString[3])
         console.log(tempString[4])
+        console.log(tempString[5])
         console.log(result);
         return result;
       }
