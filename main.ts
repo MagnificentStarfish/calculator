@@ -20,7 +20,7 @@ function calculate(userInput: string): number | undefined  {
     let userCalculatorInput = userInput.slice(0, userInput.indexOf("="));
     let newString = userCalculatorInput.toString();
     let splitString = newString.split(/([+\-*/])/g).filter((item) => item.trim() !== '');
-    console.log(splitString);
+    console.log('splitString: ',splitString);
     let tempString = '';
 
     for (let i=0; i<splitString.length; i++) {
@@ -43,6 +43,7 @@ function calculate(userInput: string): number | undefined  {
             i += 2;
         }
     }
+    console.log('tempstring: ', tempString);
     // console.log('tempString :', tempString);
     // let result = parseInt(splitString[0]);
     // console.log(splitString);
@@ -57,25 +58,56 @@ function calculate(userInput: string): number | undefined  {
     //     if (splitString[i] === '-') {
     //         result -= parseInt(tempString[i+1]);
     //     }
-        let result = parseInt(tempString[0]); // Initialize result with the first number
+        // let result = 0;
+let result = 0;
+let i = 0;
+while (i < splitString.length) {
+  let current = splitString[i];
+  if (current === '+') {
+    result += parseInt(splitString[i + 1]);
+    i += 2;
+  } else if (current === '*') {
+    result *= parseInt(splitString[i + 1]);
+    i += 2;
+  } else if (current === '/') {
+    result /= parseInt(splitString[i + 1]);
+    i += 2;
+  } else {
+    // If the current character is not an operator, it must be a number
+    result = parseInt(current);
+    i++;
+  }
+}
+console.log('Result: ', result);
+        // for (let i =0; i<tempString.length; i++) {
+        //   if (tempString[i] === '+') {
+        //     result += parseInt(tempString[i+1]);
+        //   }
+        //   if (tempString[i] === '-') {
+        //     result -= parseInt(tempString[i+1]);
+        //   }
+        // }
+        // console.log(result);
+        // return result;
 
-        for (let i = 1; i < tempString.length; i += 2) {
-          const operator = tempString[i];
-          const operand = parseInt(tempString[i + 1]);
 
-          if (operator === '+') {
-            result += operand;
-          } else if (operator === '-') {
-            result -= operand;
-          } else if (operator === '*') {
-            result *= operand;
-          } else if (operator === '/') {
-            if (operand === 0) {
-              throw new Error('Division by zero is not allowed.');
-            }
-            result /= operand;
-          }
-        }
+        // for (let i = 1; i < tempString.length; i += 2) {
+        //   const operator = tempString[i];
+        //   const operand = parseInt(tempString[i + 1]);
+
+        //   if (operator === '+') {
+        //     result += operand;
+        //   } else if (operator === '-') {
+        //     result -= operand;
+        //   } else if (operator === '*') {
+        //     result *= operand;
+        //   } else if (operator === '/') {
+        //     if (operand === 0) {
+        //       throw new Error('Division by zero is not allowed.');
+        //     }
+        //     result /= operand;
+        //   }
+        // }
         console.log(tempString[0])
         console.log(tempString[1])
         console.log(tempString[2])
@@ -87,13 +119,13 @@ function calculate(userInput: string): number | undefined  {
       }
 
 
-let userInput = "2+40+3=";
+let userInput = "25533345346363+40+300=";
 let result = calculate(userInput);
 console.log(result);
 
-let userInput2 = "2*3*4=";
-let result2 = calculate(userInput2);
-console.log(result2);
+// let userInput2 = "2*3*4=";
+// let result2 = calculate(userInput2);
+// console.log(result2);
 
 
 
