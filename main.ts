@@ -17,109 +17,71 @@
 
 
 function calculate(userInput: string): number | undefined  {
+  console.time("Execution Time");
     let userCalculatorInput = userInput.slice(0, userInput.indexOf("="));
     let newString = userCalculatorInput.toString();
     let splitString = newString.split(/([+\-*/])/g).filter((item) => item.trim() !== '');
     console.log('splitString: ',splitString);
     let tempString = '';
 
-    for (let i=0; i<splitString.length; i++) {
-        if (splitString[i] !== '*' && splitString[i] !== '/') {
-            tempString += splitString[i];
-        }
-
-        if (splitString[i] === '*') {
-            tempString = tempString.slice(0, -1);
-            let operationResult = parseInt(splitString[i-1]) * parseInt(splitString[i+1]);
-            // tempString.slice(i-1, 3, operationResult.toString());
-            tempString += operationResult.toString();
-            i += 2;
-        }
-        if (splitString[i] === '/') {
-            tempString = tempString.slice(0, -1);
-            let operationResult = parseInt(splitString[i-1]) / parseInt(splitString[i+1]);
-            // tempString.slice(i-1, 3, operationResult.toString());
-            tempString += operationResult.toString();
-            i += 2;
-        }
+    while (splitString.includes('*') || splitString.includes('/')) {
+      let i = splitString.findIndex(item => item === '*' || item === '/');
+      if (splitString[i] === '*') {
+        let operationResult = parseInt(splitString[i-1]) * parseInt(splitString[i+1]);
+        splitString.splice(i-1, 3, operationResult.toString());
+      }
+      if (splitString[i] === '/') {
+        let operationResult = parseInt(splitString[i-1]) / parseInt(splitString[i+1]);
+        splitString.splice(i-1, 3, operationResult.toString());
+      }
     }
+    console.log('splitString after * and /: ',splitString);
+    tempString = splitString.join('');
+
+    // for (let i=0; i<splitString.length; i++) {
+    //     if (splitString[i] !== '*' && splitString[i] !== '/') {
+    //         tempString += splitString[i];
+    //     }
+
+    //     if (splitString[i] === '*') {
+    //         tempString = tempString.slice(0, -1);
+    //         let operationResult = parseInt(splitString[i-1]) * parseInt(splitString[i+1]);
+    //         // tempString.slice(i-1, 3, operationResult.toString());
+    //         tempString += operationResult.toString();
+    //         i += 2;
+    //     }
+    //     if (splitString[i] === '/') {
+    //         tempString = tempString.slice(0, -1);
+    //         let operationResult = parseInt(splitString[i-1]) / parseInt(splitString[i+1]);
+    //         // tempString.slice(i-1, 3, operationResult.toString());
+    //         tempString += operationResult.toString();
+    //         i += 2;
+    //     }
+    // }
     console.log('tempstring: ', tempString);
-    // console.log('tempString :', tempString);
-    // let result = parseInt(splitString[0]);
-    // console.log(splitString);
-    // for (let i=1; i<tempString.length; i++) {
-    //     if (splitString.length === 1) {
-    //         console.log(result);
-    //         return result;
-    //     }
-    //     if (splitString[i] === '+') {
-    //         result += parseInt(tempString[i+1]);
-    //     }
-    //     if (splitString[i] === '-') {
-    //         result -= parseInt(tempString[i+1]);
-    //     }
-        // let result = 0;
-let result = 0;
-let i = 0;
-while (i < splitString.length) {
-  let current = splitString[i];
+let tempArray = tempString.split(/(\+|-)/);
+let result = parseInt(tempArray[0]);
+let i = 1;
+while (i < tempArray.length) {
+  let current = tempArray[i];
   if (current === '+') {
-    result += parseInt(splitString[i + 1]);
+    result += parseInt(tempArray[i + 1]);
     i += 2;
-  } else if (current === '*') {
-    result *= parseInt(splitString[i + 1]);
+  }
+  else if (current === '-') {
+    result -= parseInt(tempArray[i+1]);
     i += 2;
-  } else if (current === '/') {
-    result /= parseInt(splitString[i + 1]);
-    i += 2;
-  } else {
-    // If the current character is not an operator, it must be a number
-    result = parseInt(current);
+  }
+  else {
     i++;
   }
 }
 console.log('Result: ', result);
-        // for (let i =0; i<tempString.length; i++) {
-        //   if (tempString[i] === '+') {
-        //     result += parseInt(tempString[i+1]);
-        //   }
-        //   if (tempString[i] === '-') {
-        //     result -= parseInt(tempString[i+1]);
-        //   }
-        // }
-        // console.log(result);
-        // return result;
+console.timeEnd("Execution Time");
+return result;
+}
 
-
-        // for (let i = 1; i < tempString.length; i += 2) {
-        //   const operator = tempString[i];
-        //   const operand = parseInt(tempString[i + 1]);
-
-        //   if (operator === '+') {
-        //     result += operand;
-        //   } else if (operator === '-') {
-        //     result -= operand;
-        //   } else if (operator === '*') {
-        //     result *= operand;
-        //   } else if (operator === '/') {
-        //     if (operand === 0) {
-        //       throw new Error('Division by zero is not allowed.');
-        //     }
-        //     result /= operand;
-        //   }
-        // }
-        console.log(tempString[0])
-        console.log(tempString[1])
-        console.log(tempString[2])
-        console.log(tempString[3])
-        console.log(tempString[4])
-        console.log(tempString[5])
-        console.log(result);
-        return result;
-      }
-
-
-let userInput = "25533345346363+40+300=";
+let userInput = "2*3*2*5=";
 let result = calculate(userInput);
 console.log(result);
 
