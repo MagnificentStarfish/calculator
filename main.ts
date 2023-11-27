@@ -19,6 +19,7 @@
 function calculate(userInput: string): number | undefined  {
   console.time("Execution Time");
   console.time("Execution Time");
+  console.time("Execution Time");
     let userCalculatorInput = userInput.slice(0, userInput.indexOf("="));
     let newString = userCalculatorInput.toString();
     let splitString = newString.split(/([+\-*/])/g).filter((item) => item.trim() !== '');
@@ -78,6 +79,7 @@ while (i < tempArray.length) {
   }
 }
 console.log('Result: ', result);
+console.timeEnd("Execution Time");
 console.timeEnd("Execution Time");
 console.timeEnd("Execution Time");
 return result;
