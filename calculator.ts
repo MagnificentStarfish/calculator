@@ -12,6 +12,11 @@ export function calculate(userInput: string): number | undefined  {
         splitString.splice(i, 2, '+');
       }
     }
+  for (let i = 0; i < splitString.length; i++) {
+    if (splitString[i] === '-' && i > 0 && '+*/'.includes(splitString[i-1])) {
+    splitString.splice(i, 2, '-' + splitString[i+1]);
+    }
+  }
     while (splitString.includes('*') || splitString.includes('/')) {
       let i = splitString.findIndex(item => item === '*' || item === '/');
       if (splitString[i] === '/' && splitString[i+1] === '0') {
@@ -62,6 +67,6 @@ console.timeEnd("Execution Time");
 return result;
 }
 
-let userInput = "6/-3=";
+let userInput = "4+-3=";
 let result = calculate(userInput);
 console.log(result);
