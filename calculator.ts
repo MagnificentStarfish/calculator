@@ -1,3 +1,4 @@
+// ts-node calculator.ts
 function calculate(userInput: string): number | undefined  {
   console.time("Execution Time");
     let userCalculatorInput = userInput.slice(0, userInput.indexOf("="));
