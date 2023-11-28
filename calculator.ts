@@ -7,6 +7,11 @@ export function calculate(userInput: string): number | undefined  {
     console.log('splitString: ',splitString);
     let tempString = '';
 
+    for (let i=0; i < splitString.length - 1; i++) {
+      if (splitString[i] === '-' && splitString[i+1] === '-') {
+        splitString.splice(i, 2, '+');
+      }
+    }
     while (splitString.includes('*') || splitString.includes('/')) {
       let i = splitString.findIndex(item => item === '*' || item === '/');
       if (splitString[i] === '/' && splitString[i+1] === '0') {
