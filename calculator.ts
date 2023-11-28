@@ -9,6 +9,9 @@ export function calculate(userInput: string): number | undefined  {
 
     while (splitString.includes('*') || splitString.includes('/')) {
       let i = splitString.findIndex(item => item === '*' || item === '/');
+      if (splitString[i] === '/' && splitString[i+1] === '0') {
+        throw new Error('Division by zero');
+      }
       if (splitString[i] === '*') {
         let operationResult = parseInt(splitString[i-1]) * parseInt(splitString[i+1]);
         splitString.splice(i-1, 3, operationResult.toString());
@@ -23,7 +26,17 @@ export function calculate(userInput: string): number | undefined  {
 
     console.log('tempstring: ', tempString);
 let tempArray = tempString.split(/(\+|-)/);
-let result = parseInt(tempArray[0]);
+tempArray = tempArray.filter(item => item !== '');
+let result: number | undefined;
+
+if (tempArray[0] === '-') {
+  result = -parseInt(tempArray[1]);
+  tempArray = tempArray.slice(2);
+} else {
+  result = parseInt(tempArray[0]);
+}
+console.log('tempArray: ', tempArray);
+
 let i = 1;
 while (i < tempArray.length) {
   let current = tempArray[i];
@@ -44,6 +57,6 @@ console.timeEnd("Execution Time");
 return result;
 }
 
-let userInput = "2*3*2*5=";
+let userInput = "6/-3=";
 let result = calculate(userInput);
 console.log(result);
