@@ -1,8 +1,10 @@
 export function calculate(userInput: string): number | undefined  {
   console.time("Execution Time");
   let userCalculatorInput = userInput.slice(0, userInput.indexOf("="));
+
   let inputWithoutEqualSign = userCalculatorInput.toString();
   let calculationElements = inputWithoutEqualSign.split(/([+\-*/])/g).filter((item) => item.trim() !== '');
+
   console.log('calculationElements: ', calculationElements);
 
   for (let i=0; i < calculationElements.length - 1; i++) {
@@ -10,6 +12,12 @@ export function calculate(userInput: string): number | undefined  {
       calculationElements.splice(i, 2, '+');
     }
   }
+
+  if (calculationElements[0] === '-' && !isNaN(Number(calculationElements[1]))) {
+    calculationElements[0] = '-' + calculationElements[1];
+    calculationElements.splice(1, 1);
+  }
+
 
   for (let i = 0; i < calculationElements.length; i++) {
     if (calculationElements[i] === '-' && i > 0 && '+*/'.includes(calculationElements[i-1])) {
@@ -50,7 +58,7 @@ export function calculate(userInput: string): number | undefined  {
   return Number(calculationElements[0]);
 }
 
-console.log(calculate('-2*-3='));
+console.log(calculate('-2*3='));
 
 //   // while (calculationElements.includes('+') || (calculationElements.includes('-') && calculationElements.some((v, i) => v === '-' && i !== 0 && !'+*/'.includes(calculationElements[i-1])))) {
 //   //   let i = calculationElements.findIndex(item => item === '+' || (item === '-' && i !== 0 && !'+*/'.includes(calculationElements[i-1])));

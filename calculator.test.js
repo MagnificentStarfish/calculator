@@ -108,3 +108,71 @@ test('calculate 2+3*-4 to equal -10', () => {
 test('calculate 2+3*-4/-2 to equal 8', () => {
     expect(calculate('2+3*-4/-2=')).toBe(8);
 });
+
+test('calculate -2+3 to equal 1', () => {
+    expect(calculate('-2+3=')).toBe(1);
+});
+
+test('calculate -2*-3 to equal 6', () => {
+    expect(calculate('-2*-3=')).toBe(6);
+});
+
+test('calculate -2/-1 to equal 2', () => {
+    expect(calculate('-2/-1=')).toBe(2);
+});
+
+test('calculate -2+3*-1 to equal -5', () => {
+    expect(calculate('-2+3*-1=')).toBe(-5);
+});
+
+test('calculate -2*-3+4 to equal 10', () => {
+    expect(calculate('-2*-3+4=')).toBe(10);
+});
+
+test('calculate -2/-1+5 to equal 7', () => {
+    expect(calculate('-2/-1+5=')).toBe(7);
+});
+
+test('calculate 2*-3*-2 to equal 12', () => {
+    expect(calculate('2*-3*-2=')).toBe(12);
+});
+
+test('calculate 2/-1*-3 to equal 6', () => {
+    expect(calculate('2/-1*-3=')).toBe(6);
+});
+
+test('calculate -2*-3/-1 to equal -6', () => {
+    expect(calculate('-2*-3/-1=')).toBe(-6);
+});
+
+test('calculate -2/-1*-3 to equal -6', () => {
+    expect(calculate('-2/-1*-3=')).toBe(-6);
+});
+
+test('calculate -2+3*-1+5 to equal 0', () => {
+    expect(calculate('-2+3*-1+5=')).toBe(0);
+});
+
+test('calculate -2*-3+4/-2 to equal 4', () => {
+    expect(calculate('-2*-3+4/-2=')).toBe(4);
+});
+
+test('calculate -2/-1+5*-3 to equal -13', () => {
+    expect(calculate('-2/-1+5*-3=')).toBe(-13);
+});
+
+test('calculate 2*-3*-2+4 to equal 16', () => {
+    expect(calculate('2*-3*-2+4=')).toBe(16);
+});
+
+test('calculate 2/-1*-3+5 to equal 11', () => {
+    expect(calculate('2/-1*-3+5=')).toBe(11);
+});
+
+test('calculate -2*-3/-1+4 to equal -2', () => {
+    expect(calculate('-2*-3/-1+4=')).toBe(-2);
+});
+
+test('calculate -2/-1*-3+5 to equal -1', () => {
+    expect(calculate('-2/-1*-3+5=')).toBe(-1);
+});
