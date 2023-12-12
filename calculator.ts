@@ -58,7 +58,38 @@ export function calculate(userInput: string): number | undefined  {
   return Number(calculationElements[0]);
 }
 
-console.log(calculate('-2*3='));
+// Get all the buttons
+const buttons = document.querySelectorAll('.calculator-key') as NodeListOf<HTMLButtonElement>;
+
+// Initialize the input string
+let input = '';
+
+// Add event listeners to the buttons
+buttons.forEach((button: HTMLButtonElement) => {
+  button.addEventListener('click', () => {
+    const value = button.textContent;
+
+    if (value === '=') {
+      // If the equals sign is clicked, calculate the input and display the result
+      const result = calculate(input);
+      const display = document.querySelector('.auto-scaling-text');
+      if (display) {
+        display.textContent = result.toString();
+      }
+      input = '';
+    } else if (value === 'C') {
+      // If the clear sign is clicked, clear the input and the display
+      input = '';
+      const display = document.querySelector('.auto-scaling-text');
+      if (display) {
+        display.textContent = '0';
+      }
+    } else {
+      // If a number or operator is clicked, append its value to the input string
+      input += value;
+    }
+  });
+});
 
 //   // while (calculationElements.includes('+') || (calculationElements.includes('-') && calculationElements.some((v, i) => v === '-' && i !== 0 && !'+*/'.includes(calculationElements[i-1])))) {
 //   //   let i = calculationElements.findIndex(item => item === '+' || (item === '-' && i !== 0 && !'+*/'.includes(calculationElements[i-1])));

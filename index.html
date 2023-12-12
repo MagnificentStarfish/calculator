@@ -2,29 +2,43 @@
 <html>
 <head>
     <title>Calculator</title>
-    <!-- Add your CSS file here -->
     <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
-    <div id="calculator">
-        <input id="display" readonly>
-        <div id="buttons">
-            <button class="number">1</button>
-            <button class="number">2</button>
-            <button class="number">3</button>
-            <button class="operator">+</button>
-            <button class="number">4</button>
-            <button class="number">5</button>
-            <button class="number">6</button>
-            <button class="operator">-</button>
-            <button class="number">7</button>
-            <button class="number">8</button>
-            <button class="number">9</button>
-            <button class="operator">*</button>
-            <button class="number">0</button>
-            <button id="clear">C</button>
-            <button class="operator">/</button>
-            <button id="equals">=</button>
+    <div id="wrapper">
+        <div id="app">
+            <div class="calculator">
+                <div class="calculator-display">
+                    <span class="auto-scaling-text">0</span>
+                </div>
+                <div class="calculator-keypad">
+                    <div class="input-keys">
+                        <div class="function-keys">
+                            <button class="calculator-key key-clear">C</button>
+                        </div>
+                        <div class="digit-keys">
+                            <button class="calculator-key key-0">0</button>
+                            <button class="calculator-key key-dot">.</button>
+                            <button class="calculator-key">1</button>
+                            <button class="calculator-key">2</button>
+                            <button class="calculator-key">3</button>
+                            <button class="calculator-key">4</button>
+                            <button class="calculator-key">5</button>
+                            <button class="calculator-key">6</button>
+                            <button class="calculator-key">7</button>
+                            <button class="calculator-key">8</button>
+                            <button class="calculator-key">9</button>
+                        </div>
+                    </div>
+                    <div class="operator-keys">
+                        <button class="calculator-key key-divide">/</button>
+                        <button class="calculator-key key-multiply">*</button>
+                        <button class="calculator-key key-subtract">-</button>
+                        <button class="calculator-key key-add">+</button>
+                        <button class="calculator-key key-equals">=</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <script src="calculator.js"></script>
