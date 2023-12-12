@@ -1,0 +1,37 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+}
+
+#calculator {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    max-width: 200px;
+}
+
+#display {
+    grid-column: span 4;
+    height: 50px;
+    text-align: right;
+    padding: 10px;
+    font-size: 20px;
+}
+
+button {
+    height: 50px;
+    font-size: 20px;
+}
+
+#clear {
+    grid-column: span 2;
+}
+
+#equals {
+    grid-column: span 2;
+}
