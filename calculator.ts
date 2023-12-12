@@ -71,7 +71,16 @@ buttons.forEach((button: HTMLButtonElement) => {
 
     if (value === '=') {
       // If the equals sign is clicked, calculate the input and display the result
-      const result = calculate(input);
+    let result;
+    try {
+      result = calculate(input);
+    } catch (error) {
+      const display = document.querySelector('.auto-scaling-text');
+      if (display) {
+        display.textContent = 'Unable to divide by 0';
+      }
+      return;
+    }
       const display = document.querySelector('.auto-scaling-text');
       if (display) {
         display.textContent = result.toString();
