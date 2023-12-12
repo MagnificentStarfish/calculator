@@ -1,4 +1,4 @@
-export function calculate(userInput: string): number | undefined  {
+export function calculate(userInput: string): number  {
   console.time("Execution Time");
   let userCalculatorInput = userInput.slice(0, userInput.indexOf("="));
 
@@ -54,7 +54,7 @@ export function calculate(userInput: string): number | undefined  {
       calculationElements.splice(i-1, 3, operationResult.toString());
     }
   }
-
+  console.timeEnd('Execution Time');
   return Number(calculationElements[0]);
 }
 
@@ -71,7 +71,7 @@ buttons.forEach((button: HTMLButtonElement) => {
 
     if (value === '=') {
       // If the equals sign is clicked, calculate the input and display the result
-    let result;
+    let result: number;
     try {
       result = calculate(input);
     } catch (error) {
@@ -99,6 +99,12 @@ buttons.forEach((button: HTMLButtonElement) => {
     }
   });
 });
+
+
+console.log(calculate('2+2'));  // Should print 4
+console.log(calculate('3*7'));  // Should print 21
+console.log(calculate('10/2'));  // Should print 5
+console.log(calculate('3/0'));  // Should throw an error
 
 //   // while (calculationElements.includes('+') || (calculationElements.includes('-') && calculationElements.some((v, i) => v === '-' && i !== 0 && !'+*/'.includes(calculationElements[i-1])))) {
 //   //   let i = calculationElements.findIndex(item => item === '+' || (item === '-' && i !== 0 && !'+*/'.includes(calculationElements[i-1])));
