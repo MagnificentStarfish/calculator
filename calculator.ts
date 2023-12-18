@@ -102,6 +102,10 @@ buttons.forEach((button: HTMLButtonElement) => {
 
       input += value;
       console.log('Current input string: ', input);
+
+      if (display) {
+        display.textContent = input;
+      }
     }
   });
 });
