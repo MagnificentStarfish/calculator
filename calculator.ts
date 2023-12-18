@@ -105,10 +105,6 @@ buttons.forEach((button: HTMLButtonElement) => {
   });
 });
 
-console.log(calculate('2+2'));  // Should print 4
-console.log(calculate('3*7'));  // Should print 21
-console.log(calculate('10/2'));  // Should print 5
-console.log(calculate('3/0'));  // Should throw an error
 
 //   // while (calculationElements.includes('+') || (calculationElements.includes('-') && calculationElements.some((v, i) => v === '-' && i !== 0 && !'+*/'.includes(calculationElements[i-1])))) {
 //   //   let i = calculationElements.findIndex(item => item === '+' || (item === '-' && i !== 0 && !'+*/'.includes(calculationElements[i-1])));
