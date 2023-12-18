@@ -67,6 +67,12 @@ html {
     display: inline-block;
   }
 
+.error-text {
+    font-size: .38em;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
   .calculator-display .auto-scaling-text {
     padding: 0 30px;
     position: absolute;

@@ -55,6 +55,10 @@ var input = '';
 // Add event listeners to the buttons
 buttons.forEach(function (button) {
     button.addEventListener('click', function () {
+        var display = document.querySelector('.auto-scaling-text');
+        if (display) {
+            display.classList.remove('error-text');
+        }
         console.log('Button clicked: ', button.textContent);
         var value = button.textContent;
         if (value === '=') {
@@ -69,6 +73,7 @@ buttons.forEach(function (button) {
                     var display_1 = document.querySelector('.auto-scaling-text');
                     if (display_1) {
                         display_1.textContent = 'Unable to divide by 0';
+                        display_1.classList.add('error-text');
                     }
                     return;
                 }
@@ -80,15 +85,13 @@ buttons.forEach(function (button) {
             }, 0);
         }
         else if (value === 'C') {
-            // If the clear sign is clicked, clear the input and the display
             input = '';
-            var display = document.querySelector('.auto-scaling-text');
-            if (display) {
-                display.textContent = '0';
+            var display_2 = document.querySelector('.auto-scaling-text');
+            if (display_2) {
+                display_2.textContent = '0';
             }
         }
         else {
-            // If a number or operator is clicked, append its value to the input string
             input += value;
             console.log('Current input string: ', input);
         }
