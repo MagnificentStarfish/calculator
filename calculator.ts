@@ -1,13 +1,28 @@
-function adjustFontSize(display: HTMLElement, maxDigits: number) {
-  const textContent = display.textContent || '';
-  const length = textContent.length;
-  if (length > maxDigits) {
-    const fontSize = Math.floor((maxDigits / length) * 100);
-    display.style.fontSize = `${fontSize}%`;
-} else {
-  display.style.fontSize = '100%';
+// function adjustFontSize(display: HTMLElement, maxDigits: number) {
+//   const textContent = display.textContent || '';
+//   const length = textContent.length;
+//   if (length > maxDigits) {
+//     const fontSize = Math.floor((maxDigits / length) * 100);
+//     display.style.fontSize = `${fontSize}%`;
+// } else {
+//   display.style.fontSize = '100%';
+// }
+// }
+
+function adjustFontSize(display: HTMLElement) {
+  console.log('adjustFontSize called');
+  let fontSize = parseInt(window.getComputedStyle(display, null).getPropertyValue('font-size'), 10);
+  console.log('Initial font size:', fontSize);
+
+  console.log('display.scrollWidth:', display.scrollWidth);
+  console.log('display.offsetWidth:', display.offsetWidth);
+
+  const requiredFontSize = fontSize * (display.offsetWidth - 10) / display.scrollWidth;
+
+  display.style.fontSize = `${Math.max(requiredFontSize, 10)}px`;
+  console.log('Updated font size:', display.style.fontSize);
 }
-}
+
 
 
 function formatNumber(num: number, maxDigits: number): string {
@@ -15,7 +30,7 @@ function formatNumber(num: number, maxDigits: number): string {
     return num.toExponential(maxDigits);
   }
   let numStr = num.toString();
-  if (numStr.length > maxDigits) {
+  if (numStr.length > maxDigits - 1) {
     if (Number.isInteger(num)) {
       numStr = num.toExponential(0);
     } else {
@@ -23,7 +38,7 @@ function formatNumber(num: number, maxDigits: number): string {
       const factor = Math.pow(10, decimalPlaces);
       num = Math.floor(num * factor) / factor;
       numStr = num.toString();
-      if (numStr.length > maxDigits) {
+      if (numStr.length > maxDigits - 1) {
         numStr = num.toExponential(decimalPlaces);
       }
     }
@@ -124,7 +139,7 @@ buttons.forEach((button: HTMLButtonElement) => {
 
         if (display) {
           display.textContent = formattedResult;
-          adjustFontSize(display, 8);
+          adjustFontSize(display);
         }
         input = '';
       }, 0);

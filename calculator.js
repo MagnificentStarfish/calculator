@@ -1,20 +1,31 @@
-function adjustFontSize(display, maxDigits) {
-    var textContent = display.textContent || '';
-    var length = textContent.length;
-    if (length > maxDigits) {
-        var fontSize = Math.floor((maxDigits / length) * 100);
-        display.style.fontSize = "".concat(fontSize, "%");
-    }
-    else {
-        display.style.fontSize = '100%';
-    }
+// function adjustFontSize(display: HTMLElement, maxDigits: number) {
+//   const textContent = display.textContent || '';
+//   const length = textContent.length;
+//   if (length > maxDigits) {
+//     const fontSize = Math.floor((maxDigits / length) * 100);
+//     display.style.fontSize = `${fontSize}%`;
+// } else {
+//   display.style.fontSize = '100%';
+// }
+// }
+function adjustFontSize(display) {
+    console.log('adjustFontSize called');
+    var fontSize = parseInt(window.getComputedStyle(display, null).getPropertyValue('font-size'), 10);
+    console.log('Initial font size:', fontSize);
+    console.log('display.scrollWidth:', display.scrollWidth);
+    console.log('display.offsetWidth:', display.offsetWidth);
+    // Calculate the required font size
+    var requiredFontSize = fontSize * (display.offsetWidth - 10) / display.scrollWidth;
+    // Set the font size to the calculated value or 10, whichever is larger
+    display.style.fontSize = "".concat(Math.max(requiredFontSize, 10), "px");
+    console.log('Updated font size:', display.style.fontSize);
 }
 function formatNumber(num, maxDigits) {
     if (Math.abs(num) > Number.MAX_SAFE_INTEGER) {
         return num.toExponential(maxDigits);
     }
     var numStr = num.toString();
-    if (numStr.length > maxDigits) {
+    if (numStr.length > maxDigits - 1) {
         if (Number.isInteger(num)) {
             numStr = num.toExponential(0);
         }
@@ -23,7 +34,7 @@ function formatNumber(num, maxDigits) {
             var factor = Math.pow(10, decimalPlaces);
             num = Math.floor(num * factor) / factor;
             numStr = num.toString();
-            if (numStr.length > maxDigits) {
+            if (numStr.length > maxDigits - 1) {
                 numStr = num.toExponential(decimalPlaces);
             }
         }
@@ -109,7 +120,7 @@ buttons.forEach(function (button) {
                 }
                 if (display) {
                     display.textContent = formattedResult;
-                    adjustFontSize(display, 8);
+                    adjustFontSize(display);
                 }
                 input = '';
             }, 0);
