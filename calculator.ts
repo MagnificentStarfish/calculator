@@ -67,26 +67,29 @@ let input = '';
 // Add event listeners to the buttons
 buttons.forEach((button: HTMLButtonElement) => {
   button.addEventListener('click', () => {
-    console.log('Button clicked');
+    console.log('Button clicked: ', button.textContent);
     const value = button.textContent;
 
     if (value === '=') {
       // If the equals sign is clicked, calculate the input and display the result
-    let result: number;
-    try {
-      result = calculate(input);
-    } catch (error) {
-      const display = document.querySelector('.auto-scaling-text');
-      if (display) {
-        display.textContent = 'Unable to divide by 0';
-      }
-      return;
-    }
-      const display = document.querySelector('.auto-scaling-text');
-      if (display) {
-        display.textContent = result.toString();
-      }
-      input = '';
+      input += value;
+      setTimeout(() => {
+        let result: number;
+        try {
+          result = calculate(input);
+        } catch (error) {
+          const display = document.querySelector('.auto-scaling-text');
+          if (display) {
+            display.textContent = 'Unable to divide by 0';
+          }
+          return;
+        }
+        const display = document.querySelector('.auto-scaling-text');
+        if (display) {
+          display.textContent = result.toString();
+        }
+        input = '';
+      }, 0);
     } else if (value === 'C') {
       // If the clear sign is clicked, clear the input and the display
       input = '';
@@ -97,10 +100,10 @@ buttons.forEach((button: HTMLButtonElement) => {
     } else {
       // If a number or operator is clicked, append its value to the input string
       input += value;
+      console.log('Current input string: ', input);
     }
   });
 });
-
 
 console.log(calculate('2+2'));  // Should print 4
 console.log(calculate('3*7'));  // Should print 21

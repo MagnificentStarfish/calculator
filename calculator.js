@@ -55,26 +55,29 @@ var input = '';
 // Add event listeners to the buttons
 buttons.forEach(function (button) {
     button.addEventListener('click', function () {
-        console.log('Button clicked');
+        console.log('Button clicked: ', button.textContent);
         var value = button.textContent;
         if (value === '=') {
             // If the equals sign is clicked, calculate the input and display the result
-            var result = void 0;
-            try {
-                result = calculate(input);
-            }
-            catch (error) {
-                var display_1 = document.querySelector('.auto-scaling-text');
-                if (display_1) {
-                    display_1.textContent = 'Unable to divide by 0';
+            input += value;
+            setTimeout(function () {
+                var result;
+                try {
+                    result = calculate(input);
                 }
-                return;
-            }
-            var display = document.querySelector('.auto-scaling-text');
-            if (display) {
-                display.textContent = result.toString();
-            }
-            input = '';
+                catch (error) {
+                    var display_1 = document.querySelector('.auto-scaling-text');
+                    if (display_1) {
+                        display_1.textContent = 'Unable to divide by 0';
+                    }
+                    return;
+                }
+                var display = document.querySelector('.auto-scaling-text');
+                if (display) {
+                    display.textContent = result.toString();
+                }
+                input = '';
+            }, 0);
         }
         else if (value === 'C') {
             // If the clear sign is clicked, clear the input and the display
@@ -87,6 +90,7 @@ buttons.forEach(function (button) {
         else {
             // If a number or operator is clicked, append its value to the input string
             input += value;
+            console.log('Current input string: ', input);
         }
     });
 });
