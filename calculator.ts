@@ -10,6 +10,28 @@ function adjustFontSize(display: HTMLElement, maxDigits: number) {
 }
 
 
+function formatNumber(num: number, maxDigits: number): string {
+  if (Math.abs(num) > Number.MAX_SAFE_INTEGER) {
+    return num.toExponential(maxDigits);
+  }
+  let numStr = num.toString();
+  if (numStr.length > maxDigits) {
+    if (Number.isInteger(num)) {
+      numStr = num.toExponential(0);
+    } else {
+      const decimalPlaces = maxDigits - numStr.indexOf('.') - 1;
+      const factor = Math.pow(10, decimalPlaces);
+      num = Math.floor(num * factor) / factor;
+      numStr = num.toString();
+      if (numStr.length > maxDigits) {
+        numStr = num.toExponential(decimalPlaces);
+      }
+    }
+  }
+  return numStr;
+}
+
+
 export function calculate(userInput: string): number  {
   console.time("Execution Time");
   let userCalculatorInput = userInput.slice(0, userInput.indexOf("="));
@@ -86,21 +108,22 @@ buttons.forEach((button: HTMLButtonElement) => {
     if (value === '=') {
       input += value;
       setTimeout(() => {
+        const display = document.querySelector('.auto-scaling-text') as HTMLElement;
         let result: number;
+        let formattedResult: string;
         try {
           result = calculate(input);
-          result = formatNumber(result, 8)
+          formattedResult = formatNumber(result, 8)
         } catch (error) {
-          const display = document.querySelector('.auto-scaling-text');
           if (display) {
             display.textContent = 'Unable to divide by 0';
             display.classList.add('error-text');
           }
           return;
         }
-        const display = document.querySelector('.auto-scaling-text');
+
         if (display) {
-          display.textContent = result.toString();
+          display.textContent = formattedResult;
           adjustFontSize(display, 8);
         }
         input = '';

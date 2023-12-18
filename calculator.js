@@ -1,3 +1,35 @@
+function adjustFontSize(display, maxDigits) {
+    var textContent = display.textContent || '';
+    var length = textContent.length;
+    if (length > maxDigits) {
+        var fontSize = Math.floor((maxDigits / length) * 100);
+        display.style.fontSize = "".concat(fontSize, "%");
+    }
+    else {
+        display.style.fontSize = '100%';
+    }
+}
+function formatNumber(num, maxDigits) {
+    if (Math.abs(num) > Number.MAX_SAFE_INTEGER) {
+        return num.toExponential(maxDigits);
+    }
+    var numStr = num.toString();
+    if (numStr.length > maxDigits) {
+        if (Number.isInteger(num)) {
+            numStr = num.toExponential(0);
+        }
+        else {
+            var decimalPlaces = maxDigits - numStr.indexOf('.') - 1;
+            var factor = Math.pow(10, decimalPlaces);
+            num = Math.floor(num * factor) / factor;
+            numStr = num.toString();
+            if (numStr.length > maxDigits) {
+                numStr = num.toExponential(decimalPlaces);
+            }
+        }
+    }
+    return numStr;
+}
 export function calculate(userInput) {
     console.time("Execution Time");
     var userCalculatorInput = userInput.slice(0, userInput.indexOf("="));
@@ -61,30 +93,32 @@ buttons.forEach(function (button) {
         if (value === '=') {
             input += value;
             setTimeout(function () {
+                var display = document.querySelector('.auto-scaling-text');
                 var result;
+                var formattedResult;
                 try {
                     result = calculate(input);
+                    formattedResult = formatNumber(result, 8);
                 }
                 catch (error) {
-                    var display_1 = document.querySelector('.auto-scaling-text');
-                    if (display_1) {
-                        display_1.textContent = 'Unable to divide by 0';
-                        display_1.classList.add('error-text');
+                    if (display) {
+                        display.textContent = 'Unable to divide by 0';
+                        display.classList.add('error-text');
                     }
                     return;
                 }
-                var display = document.querySelector('.auto-scaling-text');
                 if (display) {
-                    display.textContent = result.toString();
+                    display.textContent = formattedResult;
+                    adjustFontSize(display, 8);
                 }
                 input = '';
             }, 0);
         }
         else if (value === 'C') {
             input = '';
-            var display_2 = document.querySelector('.auto-scaling-text');
-            if (display_2) {
-                display_2.textContent = '0';
+            var display_1 = document.querySelector('.auto-scaling-text');
+            if (display_1) {
+                display_1.textContent = '0';
             }
         }
         else {
