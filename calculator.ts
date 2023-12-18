@@ -1,3 +1,15 @@
+function adjustFontSize(display: HTMLElement, maxDigits: number) {
+  const textContent = display.textContent || '';
+  const length = textContent.length;
+  if (length > maxDigits) {
+    const fontSize = Math.floor((maxDigits / length) * 100);
+    display.style.fontSize = `${fontSize}%`;
+} else {
+  display.style.fontSize = '100%';
+}
+}
+
+
 export function calculate(userInput: string): number  {
   console.time("Execution Time");
   let userCalculatorInput = userInput.slice(0, userInput.indexOf("="));
@@ -77,6 +89,7 @@ buttons.forEach((button: HTMLButtonElement) => {
         let result: number;
         try {
           result = calculate(input);
+          result = formatNumber(result, 8)
         } catch (error) {
           const display = document.querySelector('.auto-scaling-text');
           if (display) {
@@ -88,6 +101,7 @@ buttons.forEach((button: HTMLButtonElement) => {
         const display = document.querySelector('.auto-scaling-text');
         if (display) {
           display.textContent = result.toString();
+          adjustFontSize(display, 8);
         }
         input = '';
       }, 0);
