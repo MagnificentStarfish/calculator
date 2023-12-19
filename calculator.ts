@@ -147,6 +147,7 @@ buttons.forEach((button: HTMLButtonElement) => {
         }
 
         if (display) {
+          formattedResult = formattedResult.replace(/-/g, '\u2011');
           display.textContent = formattedResult;
           adjustFontSize(display);
         }
@@ -165,7 +166,8 @@ buttons.forEach((button: HTMLButtonElement) => {
       console.log('Current input string: ', input);
 
       if (display) {
-        display.textContent = input;
+        let displayText = input.replace(/-/g, '\u2011');
+        display.textContent = displayText;
       }
     }
   });

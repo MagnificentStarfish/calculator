@@ -125,6 +125,7 @@ buttons.forEach(function (button) {
                     return;
                 }
                 if (display) {
+                    formattedResult = formattedResult.replace(/-/g, '\u2011');
                     display.textContent = formattedResult;
                     adjustFontSize(display);
                 }
@@ -142,7 +143,8 @@ buttons.forEach(function (button) {
             input += value;
             console.log('Current input string: ', input);
             if (display) {
-                display.textContent = input;
+                var displayText = input.replace(/-/g, '\u2011');
+                display.textContent = displayText;
             }
         }
     });
