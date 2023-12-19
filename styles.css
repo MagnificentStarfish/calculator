@@ -23,8 +23,8 @@ html {
     -webkit-tap-highlight-color: rgba(0,0,0,0);
   }
 
-  .button.key-dot {
-    font-size: 2000em;
+.calculator-key.key-dot {
+    font-size: 2em !important;
   }
 
   button:active {
@@ -129,8 +129,8 @@ html {
     padding-left: 32px;
   }
   .calculator .digit-keys .key-dot {
-    padding-top: 1em;
-    font-size: 0.75em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
   }
   .calculator .operator-keys .calculator-key {
     color: white;
