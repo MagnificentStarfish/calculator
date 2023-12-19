@@ -1,14 +1,3 @@
-// function adjustFontSize(display: HTMLElement, maxDigits: number) {
-//   const textContent = display.textContent || '';
-//   const length = textContent.length;
-//   if (length > maxDigits) {
-//     const fontSize = Math.floor((maxDigits / length) * 100);
-//     display.style.fontSize = `${fontSize}%`;
-// } else {
-//   display.style.fontSize = '100%';
-// }
-// }
-
 function adjustFontSize(display: HTMLElement) {
   console.log('adjustFontSize called');
   let fontSize = parseInt(window.getComputedStyle(display, null).getPropertyValue('font-size'), 10);
@@ -22,7 +11,6 @@ function adjustFontSize(display: HTMLElement) {
   display.style.fontSize = `${Math.max(requiredFontSize, 10)}px`;
   console.log('Updated font size:', display.style.fontSize);
 }
-
 
 
 function formatNumber(num: number, maxDigits: number): string {
@@ -42,15 +30,7 @@ function formatNumber(num: number, maxDigits: number): string {
           numStr = num.toExponential(decimalPlaces);
         }
       }
-    // } else {
-    //   const decimalPlaces = maxDigits - numStr.indexOf('.') - 1;
-    //   const factor = Math.pow(10, decimalPlaces);
-    //   num = Math.floor(num * factor) / factor;
-    //   numStr = num.toString();
-    //   if (numStr.length > maxDigits - 1) {
-    //     numStr = num.toExponential(decimalPlaces);
-    //   }
-    // }
+
   }
   return numStr;
 }
@@ -64,6 +44,12 @@ export function calculate(userInput: string): number  {
   let calculationElements = inputWithoutEqualSign.split(/([+\-*/])/g).filter((item) => item.trim() !== '');
 
   console.log('calculationElements: ', calculationElements);
+
+for (let i = 0; i < calculationElements.length; i++) {
+  if (calculationElements[i] === '/' && calculationElements[i+1] === '0') {
+    throw new Error('Division by zero');
+  }
+}
 
   for (let i=0; i < calculationElements.length - 1; i++) {
     if (calculationElements[i] === '-' && calculationElements[i+1] === '-') {
@@ -85,9 +71,7 @@ export function calculate(userInput: string): number  {
 
   while (calculationElements.includes('*') || calculationElements.includes('/')) {
     let i = calculationElements.findIndex(item => item === '*' || item === '/');
-    if (calculationElements[i] === '/' && calculationElements[i+1] === '0') {
-      throw new Error('Division by zero');
-    }
+
     if (calculationElements[i] === '*') {
       let operationResult = parseFloat(calculationElements[i-1]) * parseFloat(calculationElements[i+1]);
       calculationElements.splice(i-1, 3, operationResult.toString());
@@ -97,8 +81,6 @@ export function calculate(userInput: string): number  {
       calculationElements.splice(i-1, 3, operationResult.toString());
     }
   }
-
-  console.log('calculationElements after * and /: ', calculationElements);
 
   let i: any;
   while (calculationElements.includes('+') || (calculationElements.includes('-') && calculationElements.some((v, i) => v === '-' && i !== 0 && !'+*/'.includes(calculationElements[i-1])))) {
@@ -161,10 +143,8 @@ buttons.forEach((button: HTMLButtonElement) => {
         display.textContent = '0';
       }
     } else {
-
       input += value;
       console.log('Current input string: ', input);
-
       if (display) {
         let displayText = input.replace(/-/g, '\u2011');
         display.textContent = displayText;

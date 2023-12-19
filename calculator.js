@@ -1,13 +1,3 @@
-// function adjustFontSize(display: HTMLElement, maxDigits: number) {
-//   const textContent = display.textContent || '';
-//   const length = textContent.length;
-//   if (length > maxDigits) {
-//     const fontSize = Math.floor((maxDigits / length) * 100);
-//     display.style.fontSize = `${fontSize}%`;
-// } else {
-//   display.style.fontSize = '100%';
-// }
-// }
 function adjustFontSize(display) {
     console.log('adjustFontSize called');
     var fontSize = parseInt(window.getComputedStyle(display, null).getPropertyValue('font-size'), 10);
@@ -35,15 +25,6 @@ function formatNumber(num, maxDigits) {
                 numStr = num.toExponential(decimalPlaces);
             }
         }
-        // } else {
-        //   const decimalPlaces = maxDigits - numStr.indexOf('.') - 1;
-        //   const factor = Math.pow(10, decimalPlaces);
-        //   num = Math.floor(num * factor) / factor;
-        //   numStr = num.toString();
-        //   if (numStr.length > maxDigits - 1) {
-        //     numStr = num.toExponential(decimalPlaces);
-        //   }
-        // }
     }
     return numStr;
 }
@@ -53,35 +34,36 @@ export function calculate(userInput) {
     var inputWithoutEqualSign = userCalculatorInput.toString();
     var calculationElements = inputWithoutEqualSign.split(/([+\-*/])/g).filter(function (item) { return item.trim() !== ''; });
     console.log('calculationElements: ', calculationElements);
-    for (var i_1 = 0; i_1 < calculationElements.length - 1; i_1++) {
-        if (calculationElements[i_1] === '-' && calculationElements[i_1 + 1] === '-') {
-            calculationElements.splice(i_1, 2, '+');
+    for (var i_1 = 0; i_1 < calculationElements.length; i_1++) {
+        if (calculationElements[i_1] === '/' && calculationElements[i_1 + 1] === '0') {
+            throw new Error('Division by zero');
+        }
+    }
+    for (var i_2 = 0; i_2 < calculationElements.length - 1; i_2++) {
+        if (calculationElements[i_2] === '-' && calculationElements[i_2 + 1] === '-') {
+            calculationElements.splice(i_2, 2, '+');
         }
     }
     if (calculationElements[0] === '-' && !isNaN(Number(calculationElements[1]))) {
         calculationElements[0] = '-' + calculationElements[1];
         calculationElements.splice(1, 1);
     }
-    for (var i_2 = 0; i_2 < calculationElements.length; i_2++) {
-        if (calculationElements[i_2] === '-' && i_2 > 0 && '+*/'.includes(calculationElements[i_2 - 1])) {
-            calculationElements.splice(i_2, 2, '-' + calculationElements[i_2 + 1]);
+    for (var i_3 = 0; i_3 < calculationElements.length; i_3++) {
+        if (calculationElements[i_3] === '-' && i_3 > 0 && '+*/'.includes(calculationElements[i_3 - 1])) {
+            calculationElements.splice(i_3, 2, '-' + calculationElements[i_3 + 1]);
         }
     }
     while (calculationElements.includes('*') || calculationElements.includes('/')) {
-        var i_3 = calculationElements.findIndex(function (item) { return item === '*' || item === '/'; });
-        if (calculationElements[i_3] === '/' && calculationElements[i_3 + 1] === '0') {
-            throw new Error('Division by zero');
+        var i_4 = calculationElements.findIndex(function (item) { return item === '*' || item === '/'; });
+        if (calculationElements[i_4] === '*') {
+            var operationResult = parseFloat(calculationElements[i_4 - 1]) * parseFloat(calculationElements[i_4 + 1]);
+            calculationElements.splice(i_4 - 1, 3, operationResult.toString());
         }
-        if (calculationElements[i_3] === '*') {
-            var operationResult = parseFloat(calculationElements[i_3 - 1]) * parseFloat(calculationElements[i_3 + 1]);
-            calculationElements.splice(i_3 - 1, 3, operationResult.toString());
-        }
-        if (calculationElements[i_3] === '/') {
-            var operationResult = parseFloat(calculationElements[i_3 - 1]) / parseFloat(calculationElements[i_3 + 1]);
-            calculationElements.splice(i_3 - 1, 3, operationResult.toString());
+        if (calculationElements[i_4] === '/') {
+            var operationResult = parseFloat(calculationElements[i_4 - 1]) / parseFloat(calculationElements[i_4 + 1]);
+            calculationElements.splice(i_4 - 1, 3, operationResult.toString());
         }
     }
-    console.log('calculationElements after * and /: ', calculationElements);
     var i;
     while (calculationElements.includes('+') || (calculationElements.includes('-') && calculationElements.some(function (v, i) { return v === '-' && i !== 0 && !'+*/'.includes(calculationElements[i - 1]); }))) {
         i = calculationElements.findIndex(function (item) { return item === '+' || (item === '-' && i !== 0 && !'+*/'.includes(calculationElements[i - 1])); });
