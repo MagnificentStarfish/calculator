@@ -32,7 +32,6 @@ export function calculate(userInput) {
     var userCalculatorInput = userInput.slice(0, userInput.indexOf("="));
     var inputWithoutEqualSign = userCalculatorInput.toString();
     var calculationElements = inputWithoutEqualSign.split(/([+\-*/])/g).filter(function (item) { return item.trim() !== ''; });
-    console.log('calculationElements: ', calculationElements);
     for (var i_1 = 0; i_1 < calculationElements.length; i_1++) {
         if (calculationElements[i_1] === '/' && calculationElements[i_1 + 1] === '0') {
             throw new Error('Division by zero');
@@ -86,7 +85,6 @@ buttons.forEach(function (button) {
         if (display) {
             display.classList.remove('error-text');
         }
-        console.log('Button clicked: ', button.textContent);
         var value = button.textContent;
         if (value === '=') {
             input += value;

@@ -36,11 +36,8 @@ function formatNumber(num: number, maxDigits: number): string {
 export function calculate(userInput: string): number  {
   console.time("Execution Time");
   let userCalculatorInput = userInput.slice(0, userInput.indexOf("="));
-
   let inputWithoutEqualSign = userCalculatorInput.toString();
   let calculationElements = inputWithoutEqualSign.split(/([+\-*/])/g).filter((item) => item.trim() !== '');
-
-  console.log('calculationElements: ', calculationElements);
 
 for (let i = 0; i < calculationElements.length; i++) {
   if (calculationElements[i] === '/' && calculationElements[i+1] === '0') {
@@ -58,7 +55,6 @@ for (let i = 0; i < calculationElements.length; i++) {
     calculationElements[0] = '-' + calculationElements[1];
     calculationElements.splice(1, 1);
   }
-
 
   for (let i = 0; i < calculationElements.length; i++) {
     if (calculationElements[i] === '-' && i > 0 && '+*/'.includes(calculationElements[i-1])) {
@@ -96,16 +92,13 @@ for (let i = 0; i < calculationElements.length; i++) {
 }
 
 const buttons = document.querySelectorAll('.calculator-key') as NodeListOf<HTMLButtonElement>;
-
 let input = '';
-
 buttons.forEach((button: HTMLButtonElement) => {
   button.addEventListener('click', () => {
     const display = document.querySelector('.auto-scaling-text');
     if (display) {
       display.classList.remove('error-text');
     }
-    console.log('Button clicked: ', button.textContent);
     const value = button.textContent;
 
     if (value === '=') {

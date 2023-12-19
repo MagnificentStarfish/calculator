@@ -1,10 +1,13 @@
 {
   "name": "calculator",
   "version": "1.0.0",
-  "description": "Basic calculator application I shall read stuff later! tttedss testing test testing",
+  "description": "Basic calculator application that calculates without needing a separator minus and negative button, autoscales to fit the screen, and handles division by 0",
   "main": "index.js",
   "scripts": {
     "test": "jest"
+  },
+  "jest": {
+    "testEnvironment": "jsdom"
   },
   "keywords": [],
   "author": "",
