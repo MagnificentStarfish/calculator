@@ -1,11 +1,8 @@
 function adjustFontSize(display: HTMLElement) {
-  console.log('adjustFontSize called');
+  if (display.textContent === 'NaN') {
+    return;
+  }
   let fontSize = parseInt(window.getComputedStyle(display, null).getPropertyValue('font-size'), 10);
-  console.log('Initial font size:', fontSize);
-
-  console.log('display.scrollWidth:', display.scrollWidth);
-  console.log('display.offsetWidth:', display.offsetWidth);
-
   const requiredFontSize = fontSize * (display.offsetWidth - 10) / display.scrollWidth;
 
   display.style.fontSize = `${Math.max(requiredFontSize, 10)}px`;
