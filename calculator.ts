@@ -99,6 +99,7 @@ buttons.forEach((button: HTMLButtonElement) => {
     if (display) {
       display.classList.remove('error-text');
     }
+
     const value = button.textContent;
 
     if (value === '=') {
@@ -114,7 +115,6 @@ buttons.forEach((button: HTMLButtonElement) => {
           if (display) {
             display.textContent = 'Unable to divide by 0';
             display.classList.add('error-text');
-            adjustFontSize(display);
           }
           return;
         }

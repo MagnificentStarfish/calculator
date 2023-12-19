@@ -100,7 +100,6 @@ buttons.forEach(function (button) {
                     if (display) {
                         display.textContent = 'Unable to divide by 0';
                         display.classList.add('error-text');
-                        adjustFontSize(display);
                     }
                     return;
                 }
