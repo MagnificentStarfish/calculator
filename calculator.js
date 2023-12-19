@@ -14,9 +14,7 @@ function adjustFontSize(display) {
     console.log('Initial font size:', fontSize);
     console.log('display.scrollWidth:', display.scrollWidth);
     console.log('display.offsetWidth:', display.offsetWidth);
-    // Calculate the required font size
     var requiredFontSize = fontSize * (display.offsetWidth - 10) / display.scrollWidth;
-    // Set the font size to the calculated value or 10, whichever is larger
     display.style.fontSize = "".concat(Math.max(requiredFontSize, 10), "px");
     console.log('Updated font size:', display.style.fontSize);
 }
@@ -30,14 +28,22 @@ function formatNumber(num, maxDigits) {
             numStr = num.toExponential(0);
         }
         else {
-            var decimalPlaces = maxDigits - numStr.indexOf('.') - 1;
-            var factor = Math.pow(10, decimalPlaces);
-            num = Math.floor(num * factor) / factor;
+            var decimalPlaces = maxDigits - (numStr.indexOf('.') + 1);
+            num = Number(num.toFixed(decimalPlaces));
             numStr = num.toString();
-            if (numStr.length > maxDigits - 1) {
+            if (numStr.length > maxDigits) {
                 numStr = num.toExponential(decimalPlaces);
             }
         }
+        // } else {
+        //   const decimalPlaces = maxDigits - numStr.indexOf('.') - 1;
+        //   const factor = Math.pow(10, decimalPlaces);
+        //   num = Math.floor(num * factor) / factor;
+        //   numStr = num.toString();
+        //   if (numStr.length > maxDigits - 1) {
+        //     numStr = num.toExponential(decimalPlaces);
+        //   }
+        // }
     }
     return numStr;
 }

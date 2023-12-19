@@ -33,15 +33,24 @@ function formatNumber(num: number, maxDigits: number): string {
   if (numStr.length > maxDigits - 1) {
     if (Number.isInteger(num)) {
       numStr = num.toExponential(0);
+
     } else {
-      const decimalPlaces = maxDigits - numStr.indexOf('.') - 1;
-      const factor = Math.pow(10, decimalPlaces);
-      num = Math.floor(num * factor) / factor;
-      numStr = num.toString();
-      if (numStr.length > maxDigits - 1) {
-        numStr = num.toExponential(decimalPlaces);
+        const decimalPlaces = maxDigits - (numStr.indexOf('.') + 1);
+        num = Number(num.toFixed(decimalPlaces));
+        numStr = num.toString();
+        if (numStr.length > maxDigits) {
+          numStr = num.toExponential(decimalPlaces);
+        }
       }
-    }
+    // } else {
+    //   const decimalPlaces = maxDigits - numStr.indexOf('.') - 1;
+    //   const factor = Math.pow(10, decimalPlaces);
+    //   num = Math.floor(num * factor) / factor;
+    //   numStr = num.toString();
+    //   if (numStr.length > maxDigits - 1) {
+    //     numStr = num.toExponential(decimalPlaces);
+    //   }
+    // }
   }
   return numStr;
 }
